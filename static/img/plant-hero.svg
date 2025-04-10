@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+    <style>
+        .leaf { fill: #4caf50; }
+        .dark-leaf { fill: #388e3c; }
+        .stem { fill: #8d6e63; }
+        .pot { fill: #d7ccc8; }
+        .pot-rim { fill: #a1887f; }
+        .scanner { fill: #90caf9; stroke: #42a5f5; stroke-width: 2; }
+        .scanner-beam { fill: #e3f2fd; opacity: 0.7; }
+        .scanner-light { fill: #1976d2; opacity: 0.6; }
+    </style>
+    <!-- Plant Pot -->
+    <path class="pot-rim" d="M300,450 L500,450 L520,480 L280,480 Z"/>
+    <path class="pot" d="M310,480 L490,480 L510,600 L290,600 Z"/>
+    
+    <!-- Plant Stem -->
+    <path class="stem" d="M400,450 C400,450 400,350 400,300 C400,250 380,230 390,200 C400,170 420,180 430,150 C440,120 420,100 430,70 Q440,40 460,30" stroke="#8d6e63" stroke-width="8" fill="none"/>
+    <path class="stem" d="M400,350 C400,350 360,330 340,310" stroke="#8d6e63" stroke-width="6" fill="none"/>
+    <path class="stem" d="M400,300 C400,300 440,280 460,260" stroke="#8d6e63" stroke-width="6" fill="none"/>
+    <path class="stem" d="M400,250 C400,250 370,220 350,210" stroke="#8d6e63" stroke-width="5" fill="none"/>
+    
+    <!-- Leaves -->
+    <path class="dark-leaf" d="M460,30 Q500,0 540,20 Q570,40 560,80 Q550,120 510,130 Q480,135 460,120 Q440,110 435,90 Q430,70 460,30"/>
+    <path class="leaf" d="M340,310 Q300,300 280,260 Q260,220 280,180 Q300,140 340,130 Q380,120 410,140 Q430,170 400,200 Q380,230 340,310"/>
+    <path class="leaf" d="M460,260 Q500,240 540,250 Q580,260 600,300 Q620,340 600,380 Q580,410 540,410 Q500,410 470,380 Q440,350 460,260"/>
+    <path class="dark-leaf" d="M350,210 Q320,180 270,180 Q220,180 200,210 Q180,240 190,290 Q200,330 240,350 Q280,370 310,350 Q340,330 350,210"/>
+    
+    <!-- Scanner Beam -->
+    <rect class="scanner" x="150" y="100" width="200" height="150" rx="15"/>
+    <rect class="scanner-beam" x="175" y="250" width="150" height="200"/>
+    <circle class="scanner-light" cx="330" cy="150" r="15"/>
+    
+    <!-- Scanner to Leaf Line -->
+    <path d="M250,350 L340,260" stroke="#42a5f5" stroke-width="2" stroke-dasharray="5,5"/>
+</svg>

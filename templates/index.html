@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantPulse | AI Plant Disease Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" class="theme-checkbox">
+        <label for="theme-switch" class="theme-label" title="Toggle dark/light mode">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <span class="theme-ball"></span>
+        </label>
+    </div>
+    
+    <!-- App Layout -->
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-leaf logo-icon"></i>
+                <h1>PlantPulse</h1>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="#" class="nav-link active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="analyzer">
+                        <i class="fas fa-microscope"></i>
+                        <span>Analyzer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="results" id="results-nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Results</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="guide">
+                        <i class="fas fa-book"></i>
+                        <span>Guide</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="about">
+                        <i class="fas fa-users"></i>
+                        <span>About Us</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="debug-toggle">
+                    <input type="checkbox" id="debug-mode" class="toggle-checkbox">
+                    <label for="debug-mode" class="toggle-label" title="Toggle debug mode">
+                        <span class="toggle-inner"></span>
+                        <span class="toggle-switch"></span>
+                    </label>
+                    <span class="toggle-text">Debug Mode</span>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="breadcrumb">
+                    <i class="fas fa-leaf"></i>
+                    <span id="current-page-title">Home</span>
+                </div>
+                <div class="status-info">
+                    <span id="analysis-status"></span>
+                </div>
+            </div>
+            
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- Home Page -->
+                <section id="home" class="page active">
+                    <div class="hero-section">
+                        <div class="hero-content">
+                            <h1>Detect Plant Disease</h1>
+                            <p>Leverage AI to identify plant diseases and get actionable recommendations</p>
+                            <button class="btn primary hero-btn" id="start-analysis">
+                                <i class="fas fa-leaf"></i> Start Analysis
+                            </button>
+                        </div>
+                        <div class="hero-image">
+                            <img src="{{ url_for('static', filename='img/plant-hero.svg') }}" alt="Plant Health">
+                        </div>
+                    </div>
+                    
+                    <div class="features-section">
+                        <h2>How It Works</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <h3>Upload Image</h3>
+                                <p>Take a clear photo of the plant leaf and upload it</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <h3>AI Analysis</h3>
+                                <p>Our AI model analyzes the image to detect diseases</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                                <h3>Get Results</h3>
+                                <p>Receive detailed results and treatment recommendations</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Analyzer Page -->
+                <section id="analyzer" class="page">
+                    <div class="page-header">
+                        <h1>Disease Analyzer</h1>
+                        <p>Upload an image of a plant leaf to detect diseases</p>
+                    </div>
+                    
+                    <div class="card upload-section" id="upload-section">
+                        <div class="upload-container" id="upload-container">
+                            <div class="upload-area" id="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Upload Plant Leaf Image</h3>
+                                <p>Drag and drop an image here, or click to browse files</p>
+                                <input type="file" id="file-input" accept="image/*" hidden>
+                                <button id="select-file" class="btn primary">
+                                    <i class="fas fa-file-upload"></i> Select Image
+                                </button>
+                            </div>
+                        </div>
+                        <div class="upload-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Tips for best results:</h4>
+                            <ul>
+                                <li>Use clear, well-lit images</li>
+                                <li>Center the affected leaf in the frame</li>
+                                <li>Avoid shadows and glare</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Results Page -->
+                <section id="results" class="page">
+                    <div class="page-header">
+                        <h1>Analysis Results</h1>
+                        <p id="results-subheading">View detailed disease analysis</p>
+                    </div>
+                    
+                    <div class="result-section" id="result-section">
+                        <div class="results-grid">
+                            <div class="result-image-card card">
+                                <h3><i class="fas fa-image"></i> Analyzed Image</h3>
+                                <div class="image-preview">
+                                    <img id="preview-image" src="#" alt="Uploaded plant leaf">
+                                </div>
+                            </div>
+                            
+                            <div class="result-data">
+                                <div id="loading" class="card loading-card">
+                                    <div class="spinner"></div>
+                                    <p>Analyzing your plant...</p>
+                                    <p class="loading-subtext">Our AI is examining the leaf pattern and characteristics</p>
+                                </div>
+                                
+                                <div id="prediction-result" style="display: none;">
+                                    <div id="healthy-result" class="result-box healthy" style="display: none;">
+                                        <div class="result-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <h3>Healthy Plant Detected</h3>
+                                        <p>Good news! Your plant appears to be healthy.</p>
+                                        <p id="healthy-label">Classification: <span></span></p>
+                                        <div class="confidence-container debug-only" style="display: none;">
+                                            <p>Confidence: <span id="healthy-confidence"></span>%</p>
+                                            <div class="progress">
+                                                <div id="healthy-progress" class="progress-bar"></div>
+                                            </div>
+                                        </div>
+                                        <div class="healthy-tips">
+                                            <h4>Maintenance Tips</h4>
+                                            <ul>
+                                                <li>Continue regular watering schedule</li>
+                                                <li>Ensure proper sunlight exposure</li>
+                                                <li>Apply fertilizer as needed</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="disease-result" class="result-box diseased" style="display: none;">
+                                        <div class="result-icon">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <h3>Disease Detected</h3>
+                                        <p>Your plant appears to have a disease.</p>
+                                        <p id="disease-label">Classification: <span></span></p>
+                                        <div class="confidence-container debug-only" style="display: none;">
+                                            <p>Confidence: <span id="disease-confidence"></span>%</p>
+                                            <div class="progress">
+                                                <div id="disease-progress" class="progress-bar"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="disease-info" class="disease-info" style="display: none;">
+                            <h3><i class="fas fa-info-circle"></i> Disease Information</h3>
+                            <div id="loading-info" class="loading-info">
+                                <div class="spinner small"></div>
+                                <p>Fetching detailed information...</p>
+                            </div>
+                            <div id="info-content" style="display: none;">
+                                <div class="info-tabs">
+                                    <button class="tab-btn active" data-tab="description">Description</button>
+                                    <button class="tab-btn" data-tab="causes">Causes</button>
+                                    <button class="tab-btn" data-tab="remedies">Remedies</button>
+                                    <button class="tab-btn" data-tab="prevention">Prevention</button>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="description-tab">
+                                        <p id="disease-description"></p>
+                                    </div>
+                                    <div class="tab-pane" id="causes-tab">
+                                        <ul id="disease-causes"></ul>
+                                    </div>
+                                    <div class="tab-pane" id="remedies-tab">
+                                        <ul id="disease-remedies"></ul>
+                                    </div>
+                                    <div class="tab-pane" id="prevention-tab">
+                                        <ul id="disease-prevention"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="actions">
+                            <button id="new-analysis" class="btn secondary">
+                                <i class="fas fa-redo"></i> Analyze Another Image
+                            </button>
+                            <button id="download-report" class="btn accent">
+                                <i class="fas fa-download"></i> Download Report
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Guide Page -->
+                <section id="guide" class="page">
+                    <div class="page-header">
+                        <h1>Guide & FAQs</h1>
+                        <p>Learn how to use our plant disease detection system effectively</p>
+                    </div>
+                    
+                    <div class="guide-content">
+                        <div class="card">
+                            <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <h4>How accurate is the disease detection?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p>Our AI model has been trained on thousands of plant images and can detect common diseases with high accuracy. However, for best results, please ensure you upload clear, well-lit images.</p>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <h4>What types of plants can be analyzed?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p>Currently, our system can detect diseases in many common crops and garden plants. The model is regularly updated to improve its coverage of different plant species.</p>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <h4>How do I take a good photo for analysis?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p>For best results: <br> 1) Ensure good lighting <br> 2) Focus on the affected area <br> 3) Include the entire leaf in the frame <br> 4) Avoid shadows and strong reflections.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- About Us Page -->
+                <section id="about" class="page">
+                    <div class="page-header">
+                        <h1>About Us</h1>
+                        <p>Meet the team behind this project</p>
+                    </div>
+                    
+                    <div class="team-section">
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <div class="member-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3>Yash Agrawal</h3>
+                                <p class="member-role">
+                                    <a href="https://www.linkedin.com/in/yash-agrawal04/" style="text-decoration: none; color: inherit;">Linkedin</a>
+                                </p>
+                               </div>
+                            
+                            <div class="team-member">
+                                <div class="member-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3>Navya Agrawal</h3>
+                                <p class="member-role">
+                                    <a href="https://www.linkedin.com/in/navya-agrawal-43192725a/" style="text-decoration: none; color: inherit;">Linkedin</a>
+                                </p>
+                            </div>
+                            
+                            <div class="team-member">
+                                <div class="member-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3>Shashank Arya</h3>
+                                <p class="member-role">
+                                    <a href="https://www.linkedin.com/in/shashank-arya-260a80307/" style="text-decoration: none; color: inherit;">Linkedin</a>
+                                </p>
+                            </div>
+                            
+                            <div class="team-member">
+                                <div class="member-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3>Gopika Barot</h3>
+                                <p class="member-role">
+                                    <a href="https://www.linkedin.com" style="text-decoration: none; color: inherit;">Linkedin</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-info card">
+                            <h3><i class="fas fa-leaf"></i> Our Mission</h3>
+                            <p>This project was created with the mission to make plant disease detection accessible to everyone, helping gardeners, farmers, and plant enthusiasts maintain healthy plants through early disease detection.</p>
+                            <p>By leveraging artificial intelligence and image recognition technology, we aim to provide accurate diagnoses and actionable recommendations for plant care.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Footer -->
+            <footer>
+                <p>PlantPulse | <span class="copyright">© 2025</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Notifications Container -->
+    <div id="notifications-container"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
