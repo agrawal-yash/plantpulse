@@ -6,6 +6,7 @@ from test_best_model import predict_from_image
 import google.generativeai as genai
 import json
 from dotenv import load_dotenv
+import torch
 
 # Load environment variables
 load_dotenv()
@@ -23,6 +24,16 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-2.0-flash')
+
+# Configure PyTorch to use less memory
+torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.deterministic = True
+
+# Memory optimization for model loading
+def load_model_efficiently(model_path):
+    device = torch.device('cpu')  # Force CPU usage on Render
+    model = torch.load(model_path, map_location=device)
+    return model
 
 @app.route('/')
 def index():
@@ -121,4 +132,8 @@ def get_disease_info():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get port from environment variable or use default
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Run the app bound to the specified port and host
+    app.run(host='0.0.0.0', port=port)
