@@ -19,6 +19,8 @@ venv.bak/
 
 # User uploads
 uploads/
+uploads/*
+!uploads/.gitkeep
 
 # Distribution / packaging
 dist/
@@ -54,3 +56,8 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+
+# Model checkpoints
+*.pth
+*.h5
+*.ckpt

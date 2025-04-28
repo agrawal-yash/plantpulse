@@ -90,7 +90,8 @@ def get_disease_info():
     try:
         # Prompt for Gemini API
         prompt = f"""
-        Provide detailed information about the plant disease: {disease_name}.
+        Provide detailed information about the plant disease: {disease_name}. 
+        Keep it simple, don't make it much complicated. 
         Format the response as a JSON object with the following structure:
         {{
             "description": "Detailed description of the disease",
