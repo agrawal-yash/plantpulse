@@ -75,13 +75,14 @@ Our plant disease detection system employs a comprehensive pipeline of image pro
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/agrawal-yash/plant-disease.git
-   cd plant-disease
+   git clone https://github.com/agrawal-yash/plantpulse.git
+   cd plantpulse
    ```
 
 2. Create and activate a virtual environment (recommended):
    ```bash
    python -m venv venv
+   
    # On Windows
    venv\Scripts\activate
    # On macOS/Linux
@@ -105,7 +106,7 @@ Our plant disease detection system employs a comprehensive pipeline of image pro
 
 1. Start the Flask server:
    ```bash
-   python flask_app.py
+   python app.py
    ```
 
 2. Open your browser and navigate to:
